@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "react-social-motion"; // Wait, I use framer-motion
-import { motion as fm } from "framer-motion";
+import { motion } from "framer-motion";
 import { User, Phone, Mail, MessageSquare, Calendar, Clock, Stethoscope, ArrowRight, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import confetti from "canvas-confetti";
@@ -63,14 +62,14 @@ export default function Appointment() {
             </div>
           </div>
 
-          <fm.div 
+          <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="glass p-10 rounded-[3rem] relative"
           >
             {isSubmitted ? (
-              <fm.div 
+              <motion.div 
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="text-center py-20 space-y-6"
@@ -88,7 +87,7 @@ export default function Appointment() {
                 >
                   Send Another Request
                 </button>
-              </fm.div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -148,7 +147,7 @@ export default function Appointment() {
                 </p>
               </form>
             )}
-          </fm.div>
+          </motion.div>
         </div>
       </div>
     </section>
