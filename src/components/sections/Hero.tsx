@@ -6,9 +6,10 @@ import { Phone, Calendar, ArrowRight, Star, ShieldCheck, Users, Activity } from 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-primary-blue/5 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-primary-green/5 rounded-full blur-3xl -z-10" />
+      {/* Background decoration - Smooth CSS Orbs */}
+      <div className="absolute top-[10%] -right-20 w-[500px] h-[500px] bg-primary-blue/10 rounded-full blur-[120px] animate-pulse -z-10" />
+      <div className="absolute bottom-[10%] -left-20 w-[500px] h-[500px] bg-primary-green/10 rounded-full blur-[120px] animate-pulse -z-10 delay-700" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-gold/5 rounded-full blur-[150px] -z-10" />
 
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}

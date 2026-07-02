@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
-import Experience from "@/components/three/Experience";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,7 +28,6 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        <Experience />
         <main className="relative z-0">
           {children}
         </main>

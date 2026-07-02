@@ -37,7 +37,21 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     scroll-behavior: smooth;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(210, 100%, 98%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(160, 100%, 98%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(45, 100%, 98%, 1) 0, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(210, 100%, 98%, 1) 0, transparent 50%);
+    background-attachment: fixed;
   }
+}
+
+.dark body {
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(210, 30%, 15%, 1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(160, 30%, 15%, 1) 0, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(45, 30%, 15%, 1) 0, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(210, 30%, 15%, 1) 0, transparent 50%);
 }
 
 .glass {
