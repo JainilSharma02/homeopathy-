@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import AIChatbot from "@/components/sections/AIChatbot";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,6 +32,7 @@ export default function RootLayout({
         <main className="relative z-0">
           {children}
         </main>
+        <AIChatbot />
       </body>
     </html>
   );

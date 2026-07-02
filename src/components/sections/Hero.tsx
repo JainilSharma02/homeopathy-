@@ -59,30 +59,7 @@ export default function Hero() {
             </button>
           </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-glass-border"
-          >
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-primary-blue">20k+</div>
-              <div className="text-xs text-foreground/50 uppercase tracking-wider font-semibold">Patients</div>
-            </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-primary-green">98%</div>
-              <div className="text-xs text-foreground/50 uppercase tracking-wider font-semibold">Success</div>
-            </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-accent-gold">5000+</div>
-              <div className="text-xs text-foreground/50 uppercase tracking-wider font-semibold">Cures</div>
-            </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-slate-400">15+</div>
-              <div className="text-xs text-foreground/50 uppercase tracking-wider font-semibold">Awards</div>
-            </div>
-          </motion.div>
+
         </div>
 
         {/* Right Content - Visual Placeholder for Doctor Photo */}

@@ -10,7 +10,61 @@ const timeline = [
   { year: "2024", title: "Modern Clinical Research", desc: "Integrating AI for constitutional drug selection." },
 ];
 
+import { jsPDF } from "jspdf";
+
 export default function About() {
+  const handleDownload = () => {
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFillColor(15, 76, 129); // Primary Blue
+    doc.rect(0, 0, 210, 40, "F");
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(24);
+    doc.text("Clinical Professional Profile", 20, 25);
+    
+    // Body content
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(18);
+    doc.text("Dr. Samuel Hahnemann (Jr.)", 20, 55);
+    
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "italic");
+    doc.text("MD Homeopathy (Gold Medalist)", 20, 62);
+    
+    doc.line(20, 68, 190, 68);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Qualifications & Specializations:", 20, 80);
+    doc.setFont("helvetica", "normal");
+    doc.text("• Specialist in Chronic & Autoimmune Diseases", 25, 90);
+    doc.text("• Fellowship in Dermatology (London)", 25, 100);
+    doc.text("• 15+ Years of Dedicated Homeopathic Practice", 25, 110);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Clinical Excellence:", 20, 130);
+    doc.setFont("helvetica", "normal");
+    doc.text("Recognized for treating 20,000+ satisfied patients with a 98% success rate", 25, 140);
+    doc.text("in complex cases including Psoriasis, Migraine, and Gastric issues.", 25, 147);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Professional Milestones:", 20, 165);
+    doc.setFont("helvetica", "normal");
+    doc.text("2009: Establishment of 'Healing Touch' Homeopathy Clinic.", 25, 175);
+    doc.text("2018: Awarded 'Excellence in Clinical Homeopathy' by MH Association.", 25, 185);
+    doc.text("2024: Pioneer in AI-integrated Constitutional Case Analysis.", 25, 195);
+    
+    // Footer
+    doc.setFontSize(10);
+    doc.setTextColor(150, 150, 150);
+    doc.text("Healing Touch Homeopathy Clinic | Medical Professional Document", 20, 280);
+    
+    doc.save("Dr_Samuel_Hahnemann_Profile.pdf");
+    window.open(doc.output("bloburl"), "_blank");
+  };
+
   return (
     <section className="py-24 px-6 relative" id="about">
       <div className="container mx-auto">
@@ -23,18 +77,7 @@ export default function About() {
                   className="w-full h-auto"
                 />
              </div>
-             {/* Stats Overlay */}
-             <div className="absolute -bottom-10 -right-10 glass p-8 rounded-[2rem] shadow-2xl z-20 space-y-4">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-primary-blue/20 rounded-full flex items-center justify-center text-primary-blue">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold">20,000+</div>
-                    <div className="text-xs uppercase tracking-widest opacity-50">Happy Patients</div>
-                  </div>
-                </div>
-             </div>
+
           </div>
 
           <div className="space-y-8">
@@ -88,7 +131,10 @@ export default function About() {
             </div>
 
             <div className="flex items-center space-x-4 pt-4">
-               <button className="flex items-center space-x-2 bg-primary-blue text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-primary-blue/20">
+               <button 
+                 onClick={handleDownload}
+                 className="flex items-center space-x-2 bg-primary-blue text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-primary-blue/20 hover:scale-105 active:scale-95 transition-all"
+               >
                  <FileText className="w-5 h-5" />
                  <span>Download Profile</span>
                </button>
