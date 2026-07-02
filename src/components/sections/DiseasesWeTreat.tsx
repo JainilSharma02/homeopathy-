@@ -55,15 +55,15 @@ export default function DiseasesWeTreat() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
-              className="group glass p-8 rounded-[2.5rem] hover:bg-primary-green hover:text-white transition-all duration-500 cursor-pointer overflow-hidden relative"
+              className="group glass p-8 rounded-[2.5rem] hover:bg-primary-green/10 border-transparent hover:border-primary-green/20 transition-all duration-500 cursor-pointer overflow-hidden relative shadow-sm hover:shadow-xl"
             >
               <div className="relative z-10">
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 group-hover:opacity-100 mb-2 block">{d.category}</span>
                 <h4 className="text-2xl font-bold mb-4 group-hover:translate-x-2 transition-transform">{d.name}</h4>
-                <p className="text-sm opacity-60 group-hover:opacity-80 leading-relaxed mb-6">
+                <p className="text-sm opacity-60 leading-relaxed mb-6">
                   {d.desc}
                 </p>
-                <div className="flex items-center space-x-2 text-sm font-bold opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all">
+                <div className="flex items-center space-x-2 text-sm font-bold text-primary-green opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all">
                   <span>Learn More</span>
                   <ChevronRight className="w-4 h-4" />
                 </div>
@@ -76,7 +76,7 @@ export default function DiseasesWeTreat() {
         </div>
         
         <div className="mt-16 text-center">
-            <button className="glass px-10 py-4 rounded-2xl font-bold hover:bg-primary-green hover:text-white transition-all">
+            <button className="glass px-10 py-4 rounded-2xl font-bold border-transparent hover:border-primary-green/20 hover:bg-primary-green/5 text-foreground transition-all">
                 View All 30+ Diseases
             </button>
         </div>
