@@ -29,8 +29,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl ${
-        isScrolled ? "shadow-md py-3" : "border-b border-glass-border py-5"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${
+        isScrolled ? "py-3" : "py-5"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium hover:text-primary-blue transition-colors relative group"
+              className="text-sm font-medium text-slate-800 hover:text-primary-blue transition-colors relative group"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-blue transition-all group-hover:w-full"></span>
@@ -62,7 +62,7 @@ export default function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="lg:hidden text-foreground p-2"
+          className="lg:hidden text-slate-900 p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X /> : <Menu />}
@@ -76,7 +76,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 glass border-t border-glass-border p-6 lg:hidden"
+            className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-glass-border p-6 lg:hidden"
           >
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
@@ -84,12 +84,12 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-medium hover:text-primary-blue py-2"
+                  className="text-lg font-medium text-slate-900 hover:text-primary-blue py-2"
                 >
                   {link.name}
                 </Link>
               ))}
-              <button className="bg-primary-blue text-white px-6 py-4 rounded-xl font-medium w-full mt-4">
+              <button className="bg-primary-blue text-white px-6 py-4 rounded-xl font-medium w-full mt-4 shadow-lg shadow-primary-blue/20">
                 Book Appointment
               </button>
             </div>
