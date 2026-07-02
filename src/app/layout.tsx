@@ -14,8 +14,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Premium Homeopathy | Dr. Samuel Hahnemann",
-  description: "Experience the healing power of Nature with modern Homeopathy. Holistic treatment for chronic and acute diseases.",
+  title: "Healing Touch | Premium Homeopathic Clinic",
+  description: "Advanced Homeopathic care for chronic and acute diseases. Leading clinic by Dr. Samuel Hahnemann Jr.",
 };
 
 export default function RootLayout({
