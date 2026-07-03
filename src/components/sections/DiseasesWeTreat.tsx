@@ -247,126 +247,148 @@ export default function DiseasesWeTreat() {
   const displayedDiseases = isSearching ? filteredDiseases : filteredDiseases.slice(0, visibleCount);
 
   return (
-    <section className="py-20 px-4 md:px-6 relative overflow-hidden" id="diseases">
-      {/* Background */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/5 rounded-full blur-[120px] -z-10 translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-400/5 rounded-full blur-[120px] -z-10 -translate-x-1/3 translate-y-1/3" />
-
+    <section className="py-16 px-4 md:px-6 relative overflow-hidden" id="diseases">
+      {/* Dynamic Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-green/3 rounded-full blur-[150px] -z-10" />
+      
       <div className="container mx-auto">
-
-        {/* Section Header - centered */}
-        <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="inline-block text-xs font-black uppercase tracking-[0.25em] text-primary-green mb-4 px-4 py-1.5 bg-primary-green/10 rounded-full"
-          >
-            Medical Encyclopedia
-          </motion.span>
-          <motion.h3
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-display font-bold leading-tight text-slate-900"
-          >
-            Diseases We <span className="text-primary-green">Treat</span>
-          </motion.h3>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-slate-500 mt-3 text-base"
-          >
-            Click any condition to see medicines, usage &amp; how to get treatment.
-          </motion.p>
+        {/* 'Hatke' Search Focus */}
+        <div className="max-w-2xl mx-auto mb-16 relative">
+          <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex items-center space-x-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary-green/60 whitespace-nowrap">
+            <BookOpen className="w-3 h-3 animate-pulse" />
+            <span>Search 100+ Homeopathic Treatments</span>
+          </div>
+          
+          <div className="relative group">
+            <div className="absolute inset-0 bg-primary-green/20 blur-[100px] rounded-full opacity-30 group-focus-within:opacity-60 transition-all duration-700 -z-10" />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-primary-green w-6 h-6 z-10" />
+            <input
+              type="text"
+              placeholder="What can we help you with?"
+              value={searchTerm}
+              onChange={(e) => { setSearchTerm(e.target.value); setVisibleCount(9); }}
+              className="w-full bg-white/40 backdrop-blur-xl border border-white/50 focus:border-primary-green/50 rounded-full py-6 md:py-8 pl-16 pr-14 text-xl md:text-2xl font-display font-bold text-slate-800 placeholder:text-slate-300 focus:outline-none transition-all shadow-2xl relative z-1"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-full hover:scale-110 transition-all z-10 shadow-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+          
+          <AnimatePresence>
+            {!isSearching && (
+               <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex flex-wrap justify-center gap-3 mt-8"
+               >
+                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Discovery:</span>
+                 {["Diabetes", "PCOS", "Skin Allergy", "Anxiety", "Migraine"].map((tag, idx) => (
+                   <motion.button 
+                    key={tag}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    onClick={() => setSearchTerm(tag)}
+                    className="bg-white/80 hover:bg-primary-green text-slate-600 hover:text-white text-[11px] font-black px-5 py-2 rounded-xl transition-all border border-slate-100 shadow-sm"
+                   >
+                     {tag}
+                   </motion.button>
+                 ))}
+               </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Search Bar */}
-        <div className="relative max-w-xl mx-auto mb-10">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search any disease or symptom..."
-            value={searchTerm}
-            onChange={(e) => { setSearchTerm(e.target.value); setVisibleCount(9); }}
-            className="w-full bg-white border-2 border-slate-100 focus:border-primary-green rounded-full py-4 pl-12 pr-12 text-slate-700 font-medium placeholder:text-slate-400 focus:outline-none transition-all shadow-md"
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm("")}
-              className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors"
+        {/* Dynamic Result Counter */}
+        <AnimatePresence mode="wait">
+          {isSearching && (
+            <motion.div 
+              key="counter"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="text-center mb-10"
             >
-              <X className="w-4 h-4" />
-            </button>
+              <span className="bg-primary-green text-white text-[10px] font-black px-6 py-2 rounded-full tracking-[0.2em] shadow-xl shadow-primary-green/30">
+                {filteredDiseases.length} RELEVANT RESULTS FOUND
+              </span>
+            </motion.div>
           )}
-        </div>
+        </AnimatePresence>
 
-        {/* Search result count */}
-        {isSearching && filteredDiseases.length > 0 && (
-          <p className="text-center text-sm text-primary-green font-bold mb-6">
-            {filteredDiseases.length} result{filteredDiseases.length !== 1 ? "s" : ""} found
-          </p>
-        )}
-
-        {/* Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6">
+        {/* Diseases Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {displayedDiseases.length > 0 ? (
             displayedDiseases.map((d, i) => (
               <motion.div
                 key={d.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.04 }}
+                transition={{ delay: i * 0.05 }}
                 onClick={() => setSelectedDisease(d)}
-                className="group relative bg-white rounded-2xl md:rounded-3xl p-4 md:p-7 cursor-pointer border border-slate-100 hover:border-primary-green/30 hover:shadow-xl hover:shadow-primary-green/5 transition-all duration-300 overflow-hidden"
+                className="group relative bg-white/60 backdrop-blur-sm rounded-[2rem] p-5 md:p-8 cursor-pointer border border-white/80 hover:border-primary-green/30 hover:bg-white hover:shadow-[0_20px_50px_-20px_rgba(45,106,79,0.15)] transition-all duration-500"
               >
-                {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-green/40 to-transparent rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-primary-green/70 mb-1 md:mb-2 block">{d.category}</span>
-                <h4 className="text-sm md:text-xl font-bold text-slate-800 mb-1 md:mb-3 leading-tight group-hover:text-primary-green transition-colors">{d.name}</h4>
-                <p className="hidden md:block text-sm text-slate-500 leading-relaxed mb-5 line-clamp-2">{d.desc}</p>
-
-                <div className="flex items-center gap-1 text-[10px] md:text-sm font-bold text-primary-green group-hover:gap-2 transition-all">
-                  <span>View Details</span>
-                  <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
+                <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all">
+                  <div className="bg-primary-green/10 p-2 rounded-full">
+                    <Info className="w-4 h-4 text-primary-green" />
+                  </div>
                 </div>
 
-                {/* Glossy bubble */}
-                <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-primary-green/5 rounded-full group-hover:scale-[4] transition-all duration-700" />
+                <div className="space-y-1 md:space-y-3">
+                  <div className="inline-block bg-slate-100 text-[8px] md:text-[9px] font-black text-slate-400 px-3 py-1 rounded-full uppercase tracking-widest group-hover:bg-primary-green/10 group-hover:text-primary-green transition-colors">
+                    {d.category}
+                  </div>
+                  <h4 className="text-base md:text-2xl font-bold text-slate-800 leading-tight group-hover:text-primary-green transition-colors">
+                    {d.name}
+                  </h4>
+                  <p className="hidden md:block text-sm text-slate-500 leading-relaxed line-clamp-2">
+                    {d.desc}
+                  </p>
+                  
+                  <div className="flex items-center space-x-2 pt-2 text-[10px] md:text-sm font-bold text-primary-green group-hover:space-x-4 transition-all">
+                    <span>Clinical Profile</span>
+                    <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
+                  </div>
+                </div>
+
+                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary-green/5 rounded-full group-hover:scale-150 transition-transform duration-700 -z-10" />
               </motion.div>
             ))
           ) : (
-            <div className="col-span-full py-16 text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-6 h-6 text-slate-300" />
+            <div className="col-span-full py-24 text-center">
+              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 text-slate-300" />
               </div>
-              <h4 className="text-lg font-bold text-slate-700">No results for &quot;{searchTerm}&quot;</h4>
-              <p className="text-slate-400 text-sm mt-1">Try searching: &quot;fever&quot;, &quot;skin&quot;, &quot;joint&quot;</p>
+              <h4 className="text-2xl font-bold text-slate-700">No matching library entries</h4>
+              <p className="text-slate-400 mt-2">Try searching specifically for symptoms like "headache" or "itchy skin".</p>
             </div>
           )}
         </div>
 
-        {/* Show More Button */}
+        {/* Show More */}
         {!isSearching && visibleCount < filteredDiseases.length && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setVisibleCount(prev => prev + 9)}
-              className="px-10 py-4 bg-white border-2 border-slate-100 text-slate-700 font-bold rounded-2xl hover:border-primary-green/30 hover:text-primary-green transition-all shadow-sm active:scale-95"
+              className="px-12 py-5 bg-slate-900 text-white font-bold rounded-[1.5rem] hover:bg-primary-green shadow-xl shadow-slate-900/10 transition-all active:scale-95 flex items-center space-x-3"
             >
-              Show More ({filteredDiseases.length - visibleCount} remaining)
+              <span>Explore More Conditions</span>
+              <BookOpen className="w-5 h-5" />
             </button>
           </div>
         )}
       </div>
 
-      {/* Disease Detail Modal - Bottom Sheet on Mobile */}
+      {/* Disease Detail Bottom Sheet (Restored with minor aesthetic tweaks) */}
       <AnimatePresence>
         {selectedDisease && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-end md:items-center justify-center md:p-8 bg-black/50 backdrop-blur-sm"
             onClick={() => setSelectedDisease(null)}

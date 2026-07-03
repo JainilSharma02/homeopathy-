@@ -28,21 +28,21 @@ export default function WhyChooseUs() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {reasons.map((reason, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
+              transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] hover:scale-105 transition-all group hover:border-primary-green/30"
+              className="glass p-8 rounded-[2rem] hover:scale-105 transition-all group hover:border-primary-blue/30"
             >
-              <div className="w-10 h-10 md:w-14 md:h-14 bg-primary-green/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-primary-green group-hover:bg-primary-green group-hover:text-white transition-colors duration-500">
-                <reason.icon className="w-5 h-5 md:w-7 md:h-7" />
+              <div className="w-14 h-14 bg-primary-blue/10 rounded-2xl flex items-center justify-center mb-6 text-primary-blue group-hover:bg-primary-blue group-hover:text-white transition-colors duration-500">
+                <reason.icon className="w-7 h-7" />
               </div>
-              <h4 className="text-sm md:text-lg font-bold mb-2 md:mb-3 leading-tight">{reason.title}</h4>
-              <p className="text-[10px] md:text-sm text-foreground/50 leading-relaxed line-clamp-2 md:line-clamp-none">
+              <h4 className="text-lg font-bold mb-3">{reason.title}</h4>
+              <p className="text-sm text-foreground/50 leading-relaxed">
                 {reason.desc}
               </p>
             </motion.div>
