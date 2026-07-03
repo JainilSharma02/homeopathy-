@@ -234,106 +234,152 @@ const diseases = [
 
 export default function DiseasesWeTreat() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDisease, setSelectedDisease] = useState<null | typeof diseases[0]>(null);
+  const [visibleCount, setVisibleCount] = useState(9);
 
-  const filteredDiseases = searchTerm.trim() === "" ? [] : diseases.filter(d =>
-    d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    d.desc.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const categories = ["All", ...Array.from(new Set(diseases.map(d => d.category)))];
 
-  const isSearching = searchTerm.trim() !== "";
+  const filteredDiseases = diseases.filter(d => {
+    const matchesSearch =
+      d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.desc.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || d.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const isFiltered = searchTerm !== "" || selectedCategory !== "All";
+  const displayedDiseases = isFiltered ? filteredDiseases : filteredDiseases.slice(0, visibleCount);
 
   return (
-    <section className="py-24 px-4 md:px-6 relative overflow-hidden" id="diseases">
-      {/* Background Decorations */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-green/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-green/5 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
+    <section className="py-20 px-4 md:px-6 relative overflow-hidden" id="diseases">
+      {/* Background */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/5 rounded-full blur-[120px] -z-10 translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-400/5 rounded-full blur-[120px] -z-10 -translate-x-1/3 translate-y-1/3" />
 
       <div className="container mx-auto">
-        {/* Header + Search */}
+
+        {/* Section Header - centered */}
         <div className="text-center mb-12">
-          <motion.h2
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-xs md:text-sm font-bold text-primary-green uppercase tracking-widest mb-3"
+            className="inline-block text-xs font-black uppercase tracking-[0.25em] text-primary-green mb-4 px-4 py-1.5 bg-primary-green/10 rounded-full"
           >
             Medical Encyclopedia
-          </motion.h2>
+          </motion.span>
           <motion.h3
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-display font-bold leading-tight mb-10"
+            className="text-3xl md:text-5xl font-display font-bold leading-tight text-slate-900"
           >
-            Search Our <span className="text-primary-green">Expertise</span>
+            Diseases We <span className="text-primary-green">Treat</span>
           </motion.h3>
-
-          {/* Search Bar */}
-          <div className="relative max-w-xl mx-auto">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Type a disease, symptom or category..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white border-2 border-slate-200 focus:border-primary-green rounded-full py-4 md:py-5 pl-14 pr-5 text-slate-700 font-medium placeholder:text-slate-400 focus:outline-none transition-all shadow-sm focus:shadow-primary-green/10 focus:shadow-lg"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm("")}
-                className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-500 mt-3 text-base"
+          >
+            Click any condition to see medicines, usage &amp; how to get treatment.
+          </motion.p>
         </div>
 
-        {/* Empty state — prompt to search */}
-        {!isSearching && (
-          <div className="py-20 text-center space-y-4">
-            <div className="w-20 h-20 bg-primary-green/10 rounded-full flex items-center justify-center mx-auto">
-              <Search className="w-8 h-8 text-primary-green" />
-            </div>
-            <p className="text-slate-500 text-base font-medium">Search from 25+ conditions — Hair Loss, Diabetes, Asthma &amp; more.</p>
-          </div>
+        {/* Search Bar */}
+        <div className="relative max-w-xl mx-auto mb-10">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search any disease or symptom..."
+            value={searchTerm}
+            onChange={(e) => { setSearchTerm(e.target.value); setVisibleCount(9); }}
+            className="w-full bg-white border-2 border-slate-100 focus:border-primary-green rounded-full py-4 pl-12 pr-12 text-slate-700 font-medium placeholder:text-slate-400 focus:outline-none transition-all shadow-md"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+
+        {/* Category Chips - no scrollbar */}
+        <div className="flex overflow-x-auto no-scrollbar gap-2 mb-10 pb-1 justify-start md:justify-center flex-nowrap">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => { setSelectedCategory(cat); setVisibleCount(9); }}
+              className={`whitespace-nowrap flex-shrink-0 px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
+                selectedCategory === cat
+                  ? "bg-primary-green text-white shadow-lg shadow-primary-green/25"
+                  : "bg-white text-slate-500 border border-slate-200 hover:border-primary-green/40 hover:text-primary-green"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Results count when filtering */}
+        {isFiltered && (
+          <p className="text-center text-sm text-slate-400 mb-6 font-medium">
+            {filteredDiseases.length} condition{filteredDiseases.length !== 1 ? "s" : ""} found
+          </p>
         )}
 
-        {/* Results grid */}
-        {isSearching && (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
-            {filteredDiseases.length > 0 ? (
-              filteredDiseases.map((d, i) => (
-                <motion.div
-                  key={d.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => setSelectedDisease(d)}
-                  className="group glass p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] hover:bg-primary-green/5 border-transparent hover:border-primary-green/20 transition-all duration-500 cursor-pointer overflow-hidden relative shadow-sm hover:shadow-xl"
-                >
-                  <div className="relative z-10">
-                    <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-primary-green mb-1 md:mb-2 block">{d.category}</span>
-                    <h4 className="text-base md:text-2xl font-bold mb-1 md:mb-4 group-hover:text-primary-green transition-colors leading-tight">{d.name}</h4>
-                    <p className="hidden md:block text-sm text-foreground/60 leading-relaxed mb-6 line-clamp-2">{d.desc}</p>
-                    <div className="flex items-center space-x-1 md:space-x-2 text-[10px] md:text-sm font-bold text-primary-green group-hover:translate-x-1 transition-all">
-                      <span>View Details</span>
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
-                    </div>
-                  </div>
-                  <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-primary-green/5 rounded-full group-hover:scale-[3] transition-all duration-700" />
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full py-16 text-center space-y-3">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
-                  <Search className="w-6 h-6 text-slate-300" />
+        {/* Cards Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6">
+          {displayedDiseases.length > 0 ? (
+            displayedDiseases.map((d, i) => (
+              <motion.div
+                key={d.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.04 }}
+                onClick={() => setSelectedDisease(d)}
+                className="group relative bg-white rounded-2xl md:rounded-3xl p-4 md:p-7 cursor-pointer border border-slate-100 hover:border-primary-green/30 hover:shadow-xl hover:shadow-primary-green/5 transition-all duration-300 overflow-hidden"
+              >
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-green/40 to-transparent rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-primary-green/70 mb-1 md:mb-2 block">{d.category}</span>
+                <h4 className="text-sm md:text-xl font-bold text-slate-800 mb-1 md:mb-3 leading-tight group-hover:text-primary-green transition-colors">{d.name}</h4>
+                <p className="hidden md:block text-sm text-slate-500 leading-relaxed mb-5 line-clamp-2">{d.desc}</p>
+
+                <div className="flex items-center gap-1 text-[10px] md:text-sm font-bold text-primary-green group-hover:gap-2 transition-all">
+                  <span>View Details</span>
+                  <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-700">No results for "{searchTerm}"</h4>
-                <p className="text-slate-500 text-sm">Try a different spelling or symptom (e.g. "fever", "skin", "joint").</p>
+
+                {/* Glossy bubble */}
+                <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-primary-green/5 rounded-full group-hover:scale-[4] transition-all duration-700" />
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-full py-16 text-center">
+              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="w-6 h-6 text-slate-300" />
               </div>
-            )}
+              <h4 className="text-lg font-bold text-slate-700">No results for &quot;{searchTerm}&quot;</h4>
+              <p className="text-slate-400 text-sm mt-1">Try searching: &quot;fever&quot;, &quot;skin&quot;, &quot;joint&quot;</p>
+            </div>
+          )}
+        </div>
+
+        {/* Show More Button */}
+        {!isFiltered && visibleCount < filteredDiseases.length && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => setVisibleCount(prev => prev + 9)}
+              className="px-10 py-4 bg-white border-2 border-slate-100 text-slate-700 font-bold rounded-2xl hover:border-primary-green/30 hover:text-primary-green transition-all shadow-sm active:scale-95"
+            >
+              Show More ({filteredDiseases.length - visibleCount} remaining)
+            </button>
           </div>
         )}
       </div>
