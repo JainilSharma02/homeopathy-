@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2, Calendar, MessageCircle } from "lucide-react";
+import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2, Calendar, MessageCircle, CheckCircle, Bell } from "lucide-react";
 import { useState } from "react";
 
 const diseases = [
@@ -236,9 +236,10 @@ export default function DiseasesWeTreat() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDisease, setSelectedDisease] = useState<null | typeof diseases[0]>(null);
   const [visibleCount, setVisibleCount] = useState(9);
+  const [showToast, setShowToast] = useState(false);
 
   const filteredDiseases = diseases.filter(d =>
-    d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    d.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
     d.desc.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -528,7 +529,9 @@ export default function DiseasesWeTreat() {
                             };
                             const existingEnquiries = JSON.parse(localStorage.getItem("clinic_enquiries") || "[]");
                             localStorage.setItem("clinic_enquiries", JSON.stringify([...existingEnquiries, enquiry]));
-                            alert(`Inquiry sent for ${selectedDisease.name}! We will reach out soon.`);
+                            
+                            setShowToast(true);
+                            setTimeout(() => setShowToast(false), 5000);
                         }}
                         className="flex-1 bg-white/10 hover:bg-white/20 text-white py-5 rounded-[1.5rem] font-black text-sm md:text-base border border-white/10 transition-all flex items-center justify-center space-x-3"
                       >
@@ -540,6 +543,32 @@ export default function DiseasesWeTreat() {
                 </div>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Premium Success Toast */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] flex items-center space-x-4 bg-slate-900 border border-white/10 px-6 py-4 rounded-3xl shadow-2xl backdrop-blur-xl"
+          >
+            <div className="bg-primary-green/20 p-2 rounded-xl">
+              <CheckCircle className="w-6 h-6 text-primary-green" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-white font-bold text-sm">Inquiry Received</span>
+              <span className="text-slate-400 text-xs text-nowrap">A specialist will review your request soon.</span>
+            </div>
+            <button 
+              onClick={() => setShowToast(false)}
+              className="ml-4 text-slate-500 hover:text-white transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
