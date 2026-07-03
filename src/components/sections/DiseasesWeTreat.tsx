@@ -234,23 +234,17 @@ const diseases = [
 
 export default function DiseasesWeTreat() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDisease, setSelectedDisease] = useState<null | typeof diseases[0]>(null);
   const [visibleCount, setVisibleCount] = useState(9);
 
-  const categories = ["All", ...Array.from(new Set(diseases.map(d => d.category)))];
+  const filteredDiseases = diseases.filter(d =>
+    d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    d.desc.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const filteredDiseases = diseases.filter(d => {
-    const matchesSearch =
-      d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.desc.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || d.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const isFiltered = searchTerm !== "" || selectedCategory !== "All";
-  const displayedDiseases = isFiltered ? filteredDiseases : filteredDiseases.slice(0, visibleCount);
+  const isSearching = searchTerm !== "";
+  const displayedDiseases = isSearching ? filteredDiseases : filteredDiseases.slice(0, visibleCount);
 
   return (
     <section className="py-20 px-4 md:px-6 relative overflow-hidden" id="diseases">
@@ -307,27 +301,10 @@ export default function DiseasesWeTreat() {
           )}
         </div>
 
-        {/* Category Chips - no scrollbar */}
-        <div className="flex overflow-x-auto no-scrollbar gap-2 mb-10 pb-1 justify-start md:justify-center flex-nowrap">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => { setSelectedCategory(cat); setVisibleCount(9); }}
-              className={`whitespace-nowrap flex-shrink-0 px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
-                selectedCategory === cat
-                  ? "bg-primary-green text-white shadow-lg shadow-primary-green/25"
-                  : "bg-white text-slate-500 border border-slate-200 hover:border-primary-green/40 hover:text-primary-green"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Results count when filtering */}
-        {isFiltered && (
-          <p className="text-center text-sm text-slate-400 mb-6 font-medium">
-            {filteredDiseases.length} condition{filteredDiseases.length !== 1 ? "s" : ""} found
+        {/* Search result count */}
+        {isSearching && filteredDiseases.length > 0 && (
+          <p className="text-center text-sm text-primary-green font-bold mb-6">
+            {filteredDiseases.length} result{filteredDiseases.length !== 1 ? "s" : ""} found
           </p>
         )}
 
@@ -372,7 +349,7 @@ export default function DiseasesWeTreat() {
         </div>
 
         {/* Show More Button */}
-        {!isFiltered && visibleCount < filteredDiseases.length && (
+        {!isSearching && visibleCount < filteredDiseases.length && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setVisibleCount(prev => prev + 9)}
