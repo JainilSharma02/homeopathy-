@@ -80,7 +80,7 @@ export default function Hero() {
         >
           <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(45,106,79,0.2)]">
             <img 
-              src="/expert_doctor_homeopathy_1783062251488.png" 
+              src="/expert_doctor_homeopathy.png" 
               alt="Expert Doctor" 
               className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-1000"
             />
