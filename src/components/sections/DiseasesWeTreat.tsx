@@ -234,35 +234,75 @@ const diseases = [
 
 export default function DiseasesWeTreat() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDisease, setSelectedDisease] = useState<null | typeof diseases[0]>(null);
 
-  const filteredDiseases = diseases.filter(d => 
-    d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    d.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const categories = ["All", ...Array.from(new Set(diseases.map(d => d.category)))];
+
+  const filteredDiseases = diseases.filter(d => {
+    const matchesSearch = d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         d.category.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || d.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
-    <section className="py-24 px-6 relative" id="diseases">
+    <section className="py-24 px-6 relative overflow-hidden" id="diseases">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-green/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-green/5 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
+
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-12">
           <div className="space-y-4">
-            <h2 className="text-sm font-bold text-primary-green uppercase tracking-widest">Treatments</h2>
-            <h3 className="text-4xl lg:text-5xl font-display font-bold">Specialized <span className="text-primary-green">Care</span> for All</h3>
+            <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="text-sm font-bold text-primary-green uppercase tracking-widest"
+            >
+              Medical Encyclopedia
+            </motion.h2>
+            <motion.h3 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl lg:text-5xl font-display font-bold leading-tight"
+            >
+              Accurate <span className="text-primary-green underline decoration-primary-green/20 underline-offset-8">Care</span> for All Conditions
+            </motion.h3>
           </div>
           
           <div className="relative group max-w-md w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/30 group-focus-within:text-primary-green transition-colors" />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-foreground/30 group-focus-within:text-primary-green transition-colors w-5 h-5" />
             <input 
               type="text" 
-              placeholder="Search disease or symptom..."
+              placeholder="Search by disease or symptom..."
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white/50 border border-glass-border rounded-full py-4 pl-12 pr-6 focus:outline-none focus:ring-2 focus:ring-primary-green/20 glass transition-all"
+              className="w-full bg-white/80 border border-slate-200 rounded-[2rem] py-5 pl-14 pr-8 focus:outline-none focus:ring-4 focus:ring-primary-green/10 transition-all font-medium text-slate-700 placeholder:text-slate-400"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredDiseases.map((d, i) => (
+        {/* Category Tabs */}
+        <div className="flex overflow-x-auto pb-8 mb-12 gap-3 no-scrollbar -mx-6 px-6 scroll-smooth">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`whitespace-nowrap px-8 py-3 rounded-2xl font-bold transition-all duration-300 border ${
+                selectedCategory === cat 
+                ? "bg-primary-green text-white border-primary-green shadow-lg shadow-primary-green/20 scale-105" 
+                : "bg-white text-slate-500 border-slate-100 hover:border-primary-green/30 hover:bg-primary-green/5"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {filteredDiseases.length > 0 ? (
+            filteredDiseases.map((d, i) => (
             <motion.div
               key={d.name}
               initial={{ opacity: 0, y: 20 }}
@@ -286,7 +326,16 @@ export default function DiseasesWeTreat() {
               
               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary-green/5 rounded-full group-hover:scale-[3] transition-all duration-700" />
             </motion.div>
-          ))}
+          ))
+          ) : (
+            <div className="col-span-full py-20 text-center space-y-4">
+              <div className="bg-slate-50 dark:bg-slate-800/50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 text-slate-300" />
+              </div>
+              <h4 className="text-xl font-bold text-slate-700 dark:text-slate-200">No conditions found</h4>
+              <p className="text-slate-500 max-w-xs mx-auto">Try searching for a different symptom or change the category.</p>
+            </div>
+          )}
         </div>
       </div>
 
