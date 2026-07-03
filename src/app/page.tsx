@@ -10,10 +10,12 @@ import Gallery from "@/components/sections/Gallery";
 import About from "@/components/sections/About";
 
 import FAQ from "@/components/sections/FAQ";
+import Background3D from "@/components/ui/Background3D";
 
 export default function Home() {
   return (
     <>
+      <Background3D />
       <Navbar />
       <Hero />
       <About />

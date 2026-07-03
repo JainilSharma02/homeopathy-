@@ -76,9 +76,11 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="relative flex justify-center items-center"
+          whileHover={{ rotateY: 5, rotateX: -5, scale: 1.02 }}
+          style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+          className="relative flex justify-center items-center cursor-crosshair group-hover:z-30"
         >
-          <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(45,106,79,0.2)]">
+          <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(45,106,79,0.2)] border border-white/20">
             <img 
               src="/expert_doctor_homeopathy.png" 
               alt="Expert Doctor" 
