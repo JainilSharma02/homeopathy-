@@ -386,9 +386,12 @@ export default function DiseasesWeTreat() {
         )}
       </div>
 
-      {/* Disease Detail Bottom Sheet (Restored with minor aesthetic tweaks) */}
+      {/* Disease Detail Modal - Bottom Sheet on Mobile */}
       <AnimatePresence>
         {selectedDisease && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-end md:items-center justify-center md:p-8 bg-black/50 backdrop-blur-sm"
             onClick={() => setSelectedDisease(null)}
@@ -476,15 +479,45 @@ export default function DiseasesWeTreat() {
                   <p className="text-sm text-slate-600 pl-6">
                     {selectedDisease.howToGet}
                   </p>
-                  <button
-                    onClick={() => {
-                      setSelectedDisease(null);
-                      window.location.href = "#appointment";
-                    }}
-                    className="w-full bg-primary-green text-white py-4 rounded-2xl font-bold text-base shadow-xl shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.97] transition-all"
-                  >
-                    📅 Book Consultation Now
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={() => {
+                        // Store Enquiry in Local Database
+                        const enquiry = {
+                          type: "Disease Enquiry",
+                          disease: selectedDisease.name,
+                          timestamp: new Date().toISOString(),
+                          status: "Interested"
+                        };
+                        const existingEnquiries = JSON.parse(localStorage.getItem("clinic_enquiries") || "[]");
+                        localStorage.setItem("clinic_enquiries", JSON.stringify([...existingEnquiries, enquiry]));
+                        
+                        console.log("Enquiry Saved:", enquiry);
+                        
+                        setSelectedDisease(null);
+                        setTimeout(() => {
+                          const element = document.getElementById('appointment');
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }, 100);
+                      }}
+                      className="flex-1 bg-primary-green text-white py-4 rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center space-x-2"
+                    >
+                      <Calendar className="w-5 h-5" />
+                      <span>Book Appointment</span>
+                    </button>
+                    
+                    <a
+                      href={`https://wa.me/919876543210?text=Hello%20Dr.%20Hahnemann,%20I'd%20like%20to%20know%20more%20about%20treatment%20for%20*${encodeURIComponent(selectedDisease.name)}*.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-green-500 text-white py-4 rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-green-500/20 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center space-x-2"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      <span>Chat WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>
