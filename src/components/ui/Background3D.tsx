@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 export default function Background3D() {
   const { scrollY } = useScroll();
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
+    setIsMounted(true);
   }, []);
 
   // Parallax effects for different layers
@@ -43,12 +45,12 @@ export default function Background3D() {
       </motion.div>
 
       {/* Floating 3D Particles (simplified for mobile) */}
-      {!isMobile && Array.from({ length: 8 }).map((_, i) => (
+      {isMounted && !isMobile && Array.from({ length: 8 }).map((_, i) => (
         <motion.div
           key={i}
           initial={{ 
-            x: Math.random() * 100 + "%", 
-            y: Math.random() * 100 + "%", 
+            x: `${Math.random() * 100}%`, 
+            y: `${Math.random() * 100}%`, 
             opacity: 0,
             scale: 0.5 
           }}
@@ -64,7 +66,7 @@ export default function Background3D() {
           }}
           className="absolute w-24 h-24 border border-white/10 rounded-3xl"
           style={{ 
-            perspective: "1000px",
+            perspective: 1000,
             rotateX: 45,
             rotateY: 45
           }}
