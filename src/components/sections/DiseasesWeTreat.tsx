@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2 } from "lucide-react";
+import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2, Calendar } from "lucide-react";
 import { useState } from "react";
 
 const diseases = [
