@@ -358,96 +358,108 @@ export default function DiseasesWeTreat() {
         )}
       </div>
 
-      {/* Disease Detail Modal */}
+      {/* Disease Detail Modal - Bottom Sheet on Mobile */}
       <AnimatePresence>
         {selectedDisease && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/40 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-end md:items-center justify-center md:p-8 bg-black/50 backdrop-blur-sm"
             onClick={() => setSelectedDisease(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[3rem] shadow-2xl relative"
+              className="bg-white w-full md:max-w-4xl md:max-h-[90vh] h-[95vh] md:h-auto overflow-y-auto rounded-t-[2.5rem] md:rounded-[3rem] shadow-2xl relative"
             >
+              {/* Drag Handle (mobile) */}
+              <div className="flex justify-center pt-4 pb-2 md:hidden">
+                <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
+              </div>
+
               {/* Close Button */}
-              <button 
+              <button
                 onClick={() => setSelectedDisease(null)}
-                className="absolute top-8 right-8 p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:rotate-90 transition-all duration-300 z-10"
+                className="absolute top-4 md:top-8 right-5 md:right-8 p-2.5 bg-slate-100 rounded-full hover:rotate-90 transition-all duration-300 z-10"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* Left - Visual/Title */}
-                <div className="bg-primary-green/5 p-12 flex flex-col justify-center">
-                  <span className="text-primary-green font-bold uppercase tracking-widest text-xs mb-4">{selectedDisease.category}</span>
-                  <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-slate-900 dark:text-white">{selectedDisease.name}</h2>
-                  <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed italic border-l-4 border-primary-green pl-6">
-                    "{selectedDisease.desc}"
+              {/* Header strip */}
+              <div className="bg-gradient-to-r from-primary-green/10 to-primary-green/5 px-6 md:px-12 pt-4 md:pt-12 pb-6 md:pb-10">
+                <span className="text-primary-green font-bold uppercase tracking-widest text-[10px] md:text-xs block mb-2">
+                  {selectedDisease.category}
+                </span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-3">
+                  {selectedDisease.name}
+                </h2>
+                <p className="text-sm md:text-base text-slate-600 leading-relaxed border-l-4 border-primary-green pl-4 italic">
+                  {selectedDisease.desc}
+                </p>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 md:px-12 py-6 md:py-10 space-y-6">
+                {/* About */}
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
+                    <Info className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                    <span>About This Condition</span>
+                  </div>
+                  <p className="text-sm md:text-base text-slate-600 leading-relaxed pl-6">
+                    {selectedDisease.info}
                   </p>
                 </div>
 
-                {/* Right - Content */}
-                <div className="p-8 md:p-12 space-y-8">
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3 text-primary-green font-bold">
-                      <Info className="w-5 h-5" />
-                      <span>About the Condition</span>
-                    </div>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {selectedDisease.info}
-                    </p>
+                {/* Medicines */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
+                    <Pill className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                    <span>Recommended Medicines</span>
                   </div>
+                  <div className="flex flex-wrap gap-2 pl-6">
+                    {selectedDisease.medicines.map((m) => (
+                      <span key={m} className="bg-primary-green/10 text-primary-green px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4" />
+                        {m}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3 text-primary-green font-bold">
-                      <Pill className="w-5 h-5" />
-                      <span>Related Medicines</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedDisease.medicines.map((m) => (
-                        <span key={m} className="bg-primary-green/10 text-primary-green px-4 py-2 rounded-full text-sm font-medium flex items-center">
-                          <CheckCircle2 className="w-4 h-4 mr-2" />
-                          {m}
-                        </span>
-                      ))}
-                    </div>
+                {/* Usage */}
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
+                    <BookOpen className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                    <span>How to Use</span>
                   </div>
+                  <p className="text-sm md:text-base text-slate-600 italic leading-relaxed pl-6">
+                    {selectedDisease.usage}
+                  </p>
+                </div>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3 text-primary-green font-bold">
-                      <BookOpen className="w-5 h-5" />
-                      <span>How to Use</span>
-                    </div>
-                    <p className="text-slate-600 dark:text-slate-400 italic">
-                      {selectedDisease.usage}
-                    </p>
+                {/* Get Medicine CTA */}
+                <div className="bg-slate-50 rounded-2xl p-5 md:p-8 space-y-4">
+                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
+                    <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                    <span>How to Get Medicine?</span>
                   </div>
-
-                  <div className="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-3xl space-y-4">
-                    <div className="flex items-center space-x-3 text-primary-green font-bold">
-                      <ShoppingBag className="w-5 h-5" />
-                      <span>How to Get Medicine?</span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      {selectedDisease.howToGet}
-                    </p>
-                    <button 
-                      onClick={() => {
-                        setSelectedDisease(null);
-                        window.location.href = "#appointment";
-                      }}
-                      className="w-full bg-primary-green text-white py-4 rounded-xl font-bold shadow-lg shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
-                    >
-                      Book Consultation Now
-                    </button>
-                  </div>
+                  <p className="text-sm text-slate-600 pl-6">
+                    {selectedDisease.howToGet}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSelectedDisease(null);
+                      window.location.href = "#appointment";
+                    }}
+                    className="w-full bg-primary-green text-white py-4 rounded-2xl font-bold text-base shadow-xl shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.97] transition-all"
+                  >
+                    📅 Book Consultation Now
+                  </button>
                 </div>
               </div>
             </motion.div>
