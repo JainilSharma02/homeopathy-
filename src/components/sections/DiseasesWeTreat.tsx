@@ -59,6 +59,177 @@ const diseases = [
     usage: "10 drops in water, 15 minutes before breakfast and dinner.",
     howToGet: "Add to your monthly wellness subscription."
   },
+  {
+    name: "Arthritis",
+    category: "Joints",
+    desc: "Reduce inflammation and regain joint mobility.",
+    info: "Homeopathy offers effective management for Rheumatoid and Osteoarthritis by reducing swelling and pain.",
+    medicines: ["Rhus Tox", "Bryonia Alba", "Ledum Pal"],
+    usage: "4 pills thrice a day. Use warm compresses along with medication.",
+    howToGet: "Consult for a specialized Joint Care protocol."
+  },
+  {
+    name: "Asthma",
+    category: "Respiratory",
+    desc: "Improve lung capacity and reduce allergic response.",
+    info: "Focuses on strengthening the respiratory system and reducing the hypersensitivity to allergens.",
+    medicines: ["Arsenic Album", "Antim Tart", "Blatta Orientalis"],
+    usage: "5 drops in 1/4 cup of water every morning. Use inhaler only if absolutely necessary.",
+    howToGet: "Available through our Pulmonary Wellness program."
+  },
+  {
+    name: "Anxiety",
+    category: "Mental Health",
+    desc: "Gentle healing for stress, panic, and depression.",
+    info: "Addresses the emotional and physical symptoms of anxiety without any addictive side effects.",
+    medicines: ["Aconitum", "Argentum Nitricum", "Ignatia"],
+    usage: "Take 4 pills when feeling restless. Max 4 times a day.",
+    howToGet: "Personalized Mind-Body healing kits available."
+  },
+  {
+    name: "Acidity",
+    category: "Gastric",
+    desc: "Cure heartburn, bloating, and GERD permanently.",
+    info: "Neutralizes excess acid and improves digestion to prevent recurring gastric issues.",
+    medicines: ["Nux Vomica", "Carbo Veg", "Robinia"],
+    usage: "4 pills after meals or during acute burning sensation.",
+    howToGet: "Gastric Care Pack available at our pharmacy."
+  },
+  {
+    name: "Kidney Stones",
+    category: "Renal",
+    desc: "Dissolve and flush stones without any surgery.",
+    info: "Clears crystal deposits and prevents stone formation by balancing mineral levels.",
+    medicines: ["Berberis Vulgaris", "Lycopodium", "Sarsaparilla"],
+    usage: "15 drops in half a cup of water, 3 times a day. Drink 4L of water daily.",
+    howToGet: "Renal Detox kit ready for dispatch."
+  },
+  {
+    name: "Sinusitis",
+    category: "Respiratory",
+    desc: "Treat chronic sinus congestion and headaches.",
+    info: "Reduces inflammation of the sinus cavities and drains mucus naturally.",
+    medicines: ["Kali Bich", "Silicea", "Pulsatilla"],
+    usage: "4 pills 4 times a day for 2 weeks. Steam inhalation recommended.",
+    howToGet: "Sinus Relief kit available online."
+  },
+  {
+    name: "Insomnia",
+    category: "Mental Health",
+    desc: "Natural solution for deep and restful sleep.",
+    info: "Calms the mind and regulates the sleep cycle without morning grogginess.",
+    medicines: ["Coffea Cruda", "Passiflora", "Kali Phos"],
+    usage: "Take 10 drops in water 30 mins before bedtime.",
+    howToGet: "Sleep Well kits available now."
+  },
+  {
+    name: "Acne/Pimples",
+    category: "Dermatology",
+    desc: "Clear skin for teens and adults naturally.",
+    info: "Treats hormonal triggers and skin toxicity to provide lasting clear skin.",
+    medicines: ["Berberis Aqui", "Kali Brom", "Pulsatilla"],
+    usage: "Apply external lotion plus take 4 pills twice daily.",
+    howToGet: "Order the ClearSkin Duo from our store."
+  },
+  {
+    name: "Back Pain",
+    category: "Chronic Pain",
+    desc: "Relief from sciatica, slip disc, and muscle strain.",
+    info: "Strengthens the spinal column and reduces nerve inflammation.",
+    medicines: ["Hypericum", "Colocynthis", "Mag Phos"],
+    usage: "4 pills thrice a day. Local application of Arnica oil suggested.",
+    howToGet: "Back Relief specialized protocol."
+  },
+  {
+    name: "Eczema",
+    category: "Dermatology",
+    desc: "Stop itching and heal sensitive skin patches.",
+    info: "Deep-acting remedies that stop the inflammatory cycle of the skin.",
+    medicines: ["Graphites", "Mezereum", "Petroleum"],
+    usage: "Take 4 pills daily. Keep skin hydrated with natural oils.",
+    howToGet: "Dermacare healing kit."
+  },
+  {
+    name: "Tonsillitis",
+    category: "Respiratory",
+    desc: "Treat recurring throat infections in children.",
+    info: "Boosts throat immunity and reduces swelling of tonsils without surgery.",
+    medicines: ["Baryta Carb", "Belladonna", "Hepar Sulph"],
+    usage: "4 pills 3 times a day. Gargle with warm salt water.",
+    howToGet: "Pediatric immunity booster pack."
+  },
+  {
+    name: "Piles/Hemorrhoids",
+    category: "Gastric",
+    desc: "Effective non-surgical cure for pain and bleeding.",
+    info: "Improves venous circulation and eases bowel movements to heal piles.",
+    medicines: ["Aesculus", "Hamamelis", "Nux Vomica"],
+    usage: "4 pills twice daily. High fiber diet is essential.",
+    howToGet: "Gastric Relief specialized kit."
+  },
+  {
+    name: "Weight Loss",
+    category: "Metabolic",
+    desc: "Boost metabolism and burn fat naturally.",
+    info: "Targets thyroid and pituitary functions to help in natural weight management.",
+    medicines: ["Phytolacca Berry", "Fucus Ves", "Calcarea Carb"],
+    usage: "10 drops in luke warm water twice a day.",
+    howToGet: "Order the Metabolic Burn kit."
+  },
+  {
+    name: "Liver Problems",
+    category: "Gastric",
+    desc: "Heal fatty liver and improve appetite.",
+    info: "Liver tonics that stimulate cell regeneration and detoxification.",
+    medicines: ["Chelidonium", "Carduus Mar", "Lycopodium"],
+    usage: "10 drops in water twice daily after meals.",
+    howToGet: "Liver Detox essence available."
+  },
+  {
+    name: "Uric Acid/Gout",
+    category: "Metabolic",
+    desc: "Lower uric acid levels and heal joint pain.",
+    info: "Helps the kidneys flush out excess uric acid efficiently.",
+    medicines: ["Urtica Urens", "Colchicum", "Lithium Carb"],
+    usage: "15 drops in 1/2 cup water twice a day.",
+    howToGet: "Uric Acid management protocol."
+  },
+  {
+    name: "Erectile Dysfunction",
+    category: "Men's Health",
+    desc: "Restore vitality and confidence naturally.",
+    info: "Addresses psychological and physiological factors for lasting improvement.",
+    medicines: ["Selenium", "Agnus Castus", "Lycopodium"],
+    usage: "Take 4 pills daily at night. Results visible in 3-4 weeks.",
+    howToGet: "Men's Wellness premium kit."
+  },
+  {
+    name: "Menopause",
+    category: "Women's Health",
+    desc: "Manage hot flashes and mood swings.",
+    info: "Natural hormone replacement therapy through bio-identical remedies.",
+    medicines: ["Lachesis", "Sepia", "Amyl Nitrosum"],
+    usage: "4 pills whenever hot flashes occur. Max 4 doses.",
+    howToGet: "Zen Women's Harmony pack."
+  },
+  {
+    name: "Urinary Tract Infection",
+    category: "Renal",
+    desc: "Quick relief from burning and frequency.",
+    info: "Natural antiseptics that clear bacterial load from the bladder.",
+    medicines: ["Cantharis", "Staphysagria", "Apis Mell"],
+    usage: "5 drops every 2 hours in acute cases.",
+    howToGet: "UTI fast-relief kit."
+  },
+  {
+    name: "Common Cold/Flu",
+    category: "Respiratory",
+    desc: "Strengthen immunity against seasonal changes.",
+    info: "Cuts down recovery time and prevents secondary infections.",
+    medicines: ["Allium Cepa", "Gelsemium", "Eupatorium"],
+    usage: "4 pills every 3 hours during fever/sneezing.",
+    howToGet: "Home First-Aid seasonal kit."
+  }
 ];
 
 export default function DiseasesWeTreat() {
