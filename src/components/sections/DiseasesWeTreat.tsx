@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2, Calendar } from "lucide-react";
+import { Search, ChevronRight, X, Info, Pill, BookOpen, ShoppingBag, CheckCircle2, Calendar, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 const diseases = [
@@ -402,121 +402,140 @@ export default function DiseasesWeTreat() {
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white w-full md:max-w-4xl md:max-h-[90vh] h-[95vh] md:h-auto overflow-y-auto rounded-t-[2.5rem] md:rounded-[3rem] shadow-2xl relative"
+              className="bg-slate-900 text-white w-full md:max-w-4xl md:max-h-[90vh] h-[95vh] md:h-auto overflow-y-auto rounded-t-[2.5rem] md:rounded-[3rem] shadow-2xl relative border border-white/10"
             >
               {/* Drag Handle (mobile) */}
               <div className="flex justify-center pt-4 pb-2 md:hidden">
-                <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
 
               {/* Close Button */}
               <button
                 onClick={() => setSelectedDisease(null)}
-                className="absolute top-4 md:top-8 right-5 md:right-8 p-2.5 bg-slate-100 rounded-full hover:rotate-90 transition-all duration-300 z-10"
+                className="absolute top-6 right-6 p-3 bg-white/10 rounded-2xl md:hover:bg-red-500/20 text-white transition-all z-20 group"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6 group-hover:scale-110 transition-transform" />
               </button>
 
-              {/* Header strip */}
-              <div className="bg-gradient-to-r from-primary-green/10 to-primary-green/5 px-6 md:px-12 pt-4 md:pt-12 pb-6 md:pb-10">
-                <span className="text-primary-green font-bold uppercase tracking-widest text-[10px] md:text-xs block mb-2">
-                  {selectedDisease.category}
-                </span>
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-3">
-                  {selectedDisease.name}
-                </h2>
-                <p className="text-sm md:text-base text-slate-600 leading-relaxed border-l-4 border-primary-green pl-4 italic">
-                  {selectedDisease.desc}
-                </p>
-              </div>
-
-              {/* Content */}
-              <div className="px-6 md:px-12 py-6 md:py-10 space-y-6">
-                {/* About */}
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
-                    <Info className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                    <span>About This Condition</span>
-                  </div>
-                  <p className="text-sm md:text-base text-slate-600 leading-relaxed pl-6">
-                    {selectedDisease.info}
-                  </p>
-                </div>
-
-                {/* Medicines */}
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
-                    <Pill className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                    <span>Recommended Medicines</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 pl-6">
-                    {selectedDisease.medicines.map((m) => (
-                      <span key={m} className="bg-primary-green/10 text-primary-green px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4" />
-                        {m}
+              <div className="flex flex-col">
+                {/* Header Section with subtle pattern */}
+                <div className="p-8 md:p-12 pb-0 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary-green/10 rounded-full blur-[80px] -z-10" />
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                       <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-primary-green bg-primary-green/20 px-4 py-1.5 rounded-full">
+                        {selectedDisease.category}
                       </span>
-                    ))}
+                    </div>
+                    <h3 className="text-4xl md:text-6xl font-display font-bold text-white tracking-tight leading-tight">
+                      {selectedDisease.name}
+                    </h3>
+                    <div className="flex items-center space-x-3 text-slate-400 border-l-2 border-primary-green pl-4">
+                      <p className="text-sm md:text-lg italic font-medium leading-relaxed">
+                        {selectedDisease.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Usage */}
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
-                    <BookOpen className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                    <span>How to Use</span>
-                  </div>
-                  <p className="text-sm md:text-base text-slate-600 italic leading-relaxed pl-6">
-                    {selectedDisease.usage}
-                  </p>
-                </div>
+                {/* Content Body */}
+                <div className="p-8 md:p-12 space-y-10">
+                  {/* Detailed Info Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-2 text-primary-green font-bold">
+                        <Info className="w-5 h-5" />
+                        <span className="uppercase tracking-widest text-xs">About This Condition</span>
+                      </div>
+                      <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                        {selectedDisease.info}
+                      </p>
+                    </div>
 
-                {/* Get Medicine CTA */}
-                <div className="bg-slate-50 rounded-2xl p-5 md:p-8 space-y-4">
-                  <div className="flex items-center space-x-2 text-primary-green font-bold text-sm md:text-base">
-                    <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                    <span>How to Get Medicine?</span>
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-2 text-primary-green font-bold">
+                        <Pill className="w-5 h-5" />
+                        <span className="uppercase tracking-widest text-xs">Recommended Medicines</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedDisease.medicines.map((med, i) => (
+                          <div key={i} className="flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
+                            <CheckCircle2 className="w-4 h-4 text-primary-green" />
+                            <span className="text-sm font-medium text-slate-200">{med}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-slate-600 pl-6">
-                    {selectedDisease.howToGet}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={() => {
-                        // Store Enquiry in Local Database
-                        const enquiry = {
-                          type: "Disease Enquiry",
-                          disease: selectedDisease.name,
-                          timestamp: new Date().toISOString(),
-                          status: "Interested"
-                        };
-                        const existingEnquiries = JSON.parse(localStorage.getItem("clinic_enquiries") || "[]");
-                        localStorage.setItem("clinic_enquiries", JSON.stringify([...existingEnquiries, enquiry]));
-                        
-                        console.log("Enquiry Saved:", enquiry);
-                        
-                        setSelectedDisease(null);
-                        setTimeout(() => {
-                          const element = document.getElementById('appointment');
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        }, 100);
-                      }}
-                      className="flex-1 bg-primary-green text-white py-4 rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center space-x-2"
-                    >
-                      <Calendar className="w-5 h-5" />
-                      <span>Book Appointment</span>
-                    </button>
-                    
-                    <a
-                      href={`https://wa.me/919876543210?text=Hello%20Dr.%20Hahnemann,%20I'd%20like%20to%20know%20more%20about%20treatment%20for%20*${encodeURIComponent(selectedDisease.name)}*.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-green-500 text-white py-4 rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-green-500/20 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center space-x-2"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      <span>Chat WhatsApp</span>
-                    </a>
+
+                  {/* How to Use Section */}
+                  <div className="space-y-4 p-6 bg-white/5 rounded-2xl border border-white/10">
+                    <div className="flex items-center space-x-2 text-primary-green font-bold">
+                      <BookOpen className="w-5 h-5" />
+                      <span className="uppercase tracking-widest text-xs">How to Use</span>
+                    </div>
+                    <p className="text-sm md:text-base text-slate-400 italic font-medium pl-2">
+                      {selectedDisease.usage}
+                    </p>
+                  </div>
+
+                  {/* Get Medicine CTA */}
+                  <div className="bg-primary-green/5 rounded-3xl p-6 md:p-10 space-y-6 border border-primary-green/20">
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-3 text-primary-green font-black text-sm md:text-base uppercase tracking-widest">
+                        <ShoppingBag className="w-5 h-5" />
+                        <span>Prescription Strategy</span>
+                      </div>
+                      <p className="text-sm md:text-lg text-slate-300 leading-relaxed">
+                        {selectedDisease.howToGet}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                      <button
+                        onClick={() => {
+                          const enquiry = {
+                            type: "Disease Enquiry",
+                            disease: selectedDisease.name,
+                            timestamp: new Date().toISOString(),
+                            status: "Interested"
+                          };
+                          const existingEnquiries = JSON.parse(localStorage.getItem("clinic_enquiries") || "[]");
+                          localStorage.setItem("clinic_enquiries", JSON.stringify([...existingEnquiries, enquiry]));
+                          
+                          setSelectedDisease(null);
+                          setTimeout(() => {
+                            const element = document.getElementById('appointment');
+                            if (element) {
+                              element.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          }, 100);
+                        }}
+                        className="flex-1 bg-primary-green text-slate-900 py-5 rounded-[1.5rem] font-black text-sm md:text-base shadow-xl shadow-primary-green/20 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center space-x-3 group"
+                      >
+                        <Calendar className="w-5 h-5" />
+                        <span>BOOK APPOINTMENT</span>
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                           const enquiry = {
+                              type: "Quick Inquiry",
+                              disease: selectedDisease.name,
+                              timestamp: new Date().toISOString(),
+                              status: "Pending Reachout"
+                            };
+                            const existingEnquiries = JSON.parse(localStorage.getItem("clinic_enquiries") || "[]");
+                            localStorage.setItem("clinic_enquiries", JSON.stringify([...existingEnquiries, enquiry]));
+                            alert(`Inquiry sent for ${selectedDisease.name}! We will reach out soon.`);
+                        }}
+                        className="flex-1 bg-white/10 hover:bg-white/20 text-white py-5 rounded-[1.5rem] font-black text-sm md:text-base border border-white/10 transition-all flex items-center justify-center space-x-3"
+                      >
+                        <Info className="w-5 h-5" />
+                        <span>QUICK INQUIRY</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

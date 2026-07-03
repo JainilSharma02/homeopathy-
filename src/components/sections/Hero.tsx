@@ -80,13 +80,19 @@ export default function Hero() {
         >
           <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(45,106,79,0.2)]">
             <img 
-              src="https://images.unsplash.com/photo-1559839734-2b71f1536783?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+              src="/expert_doctor_homeopathy_1783062251488.png" 
               alt="Expert Doctor" 
               className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-1000"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
             
-            {/* Glossy Overlay Cards - Hidden on very small mobile for focus */}
+            {/* Expert Label - Top Left as per screenshot */}
+            <div className="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-5 py-2 rounded-2xl shadow-xl z-20 flex items-center space-x-2 border border-white">
+               <div className="w-2 h-2 bg-primary-green rounded-full animate-pulse" />
+               <span className="text-xs font-black text-slate-800 tracking-widest uppercase">Expert Doctor</span>
+            </div>
+
+            {/* Glossy Overlay Cards */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -104,7 +110,7 @@ export default function Hero() {
             <motion.div
                animate={{ y: [0, 10, 0] }}
                transition={{ duration: 5, repeat: Infinity, delay: 0.5, ease: "easeInOut" }}
-               className="absolute top-10 -right-4 md:-right-8 glass p-5 rounded-3xl flex items-center space-x-4 shadow-2xl border-white/50"
+               className="absolute top-32 -right-4 md:-right-8 glass p-5 rounded-3xl flex items-center space-x-4 shadow-2xl border-white/50"
             >
               <div className="bg-blue-500/10 p-3 rounded-2xl">
                 <Activity className="text-blue-500 w-6 h-6" />
